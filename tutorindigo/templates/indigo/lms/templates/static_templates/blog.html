@@ -10,13 +10,24 @@
         <h1>
             <%block name="pageheader">${page_header or _("Blog")}</%block>
         </h1>
-        <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
-        </p>
-        <!-- NEW IN INDIGO: add graphic image -->
-        <div class="graphic-img">
-            <img src="${static.url('images/blog.svg')}" alt="Runs on Tutor" />
-            <img class="dark" src="${static.url('images/blog-dark.svg')}" alt="Runs on Tutor" />
+
+        <div class="blog-content">
+            <div class="blog-post">
+                <h2 class="blog-year">2025</h2>
+                <h3 class="blog-title">Основание компании ProfiUp</h3>
+                <p class="blog-text">
+                    На рынке образования появился новый игрок ProfiUp. Уникальность решения основано на гибких и доступных подходах за справедливую цену.
+                    Ядро системы разработано на базе open edX, что в свою очередь позволяет максимально клиентоориентировано настроить под заказчика.
+                </p>
+            </div>
+
+            <div class="blog-post">
+                <h2 class="blog-year">2026</h2>
+                <h3 class="blog-title">Коммерческая доступность</h3>
+                <p class="blog-text">
+                    ProfiUp доступен к приобретению как в b2b, так и b2c сегментов.
+                </p>
+            </div>
         </div>
     </section>
 </main>
