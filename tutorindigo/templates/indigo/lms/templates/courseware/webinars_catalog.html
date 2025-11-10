@@ -109,12 +109,19 @@ MOSCOW_TZ = pytz.timezone('Europe/Moscow')
                         <li class="courses-listing-item webinar-item ${webinar['status']}">
                             <article class="course webinar-card" role="region" aria-label="${webinar['webinar_block'].display_name}">
                                 <header class="course-image">
-                                    <div class="cover-image webinar-image-placeholder">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
-                                            <polyline points="2,12 12,17 22,12"></polyline>
-                                        </svg>
-                                        <span>Вебинар</span>
+                                    <div class="cover-image webinar-provider-image">
+                                        % if webinar['provider'] == 'telemost':
+                                            <img src="${static.url('images/telemost.png')}" alt="Яндекс Телемост" class="provider-logo">
+                                        % elif webinar['provider'] == 'pruffme':
+                                            <img src="${static.url('images/pruffme.png')}" alt="Pruffme" class="provider-logo">
+                                        % else:
+                                            <!-- Fallback placeholder -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
+                                                <polyline points="2,12 12,17 22,12"></polyline>
+                                            </svg>
+                                            <span>Вебинар</span>
+                                        % endif
                                     </div>
                                     <span class="status-badge ${webinar['status']}">
                                         % if webinar['status'] == 'current':
@@ -253,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <style>
-.webinar-image-placeholder {
+.webinar-provider-image {
     background: #f8f9fa;
     display: flex;
     flex-direction: column;
@@ -261,18 +268,26 @@ document.addEventListener('DOMContentLoaded', function() {
     justify-content: center;
     height: 140px;
     color: #6c757d;
+    overflow: hidden;
 }
 
-.webinar-image-placeholder svg {
+.provider-logo {
+    max-width: 80px;
+    max-height: 70px;
+    object-fit: contain;
+}
+
+.webinar-provider-image svg {
     width: 60px;
     height: 60px;
     margin-bottom: 8px;
     color: #adb5bd;
 }
 
-.webinar-image-placeholder span {
+.webinar-provider-image span {
     font-size: 0.9em;
     font-weight: 500;
+    margin-top: 8px;
 }
 
 .webinar-card .status-badge {
