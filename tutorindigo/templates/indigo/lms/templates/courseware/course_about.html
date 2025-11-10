@@ -85,7 +85,7 @@ from openedx.core.lib.courses import course_image_url
       </div>
       <div class="main-cta">
         %if user.is_authenticated and registered:
-        <span class="register disabled">${_("Already Enrolled")}</span>
+        <span class="register disabled">${_("Уже зачислены")}</span>
           %if show_courseware_link:
             <a href="${course_target}">
           %endif
@@ -123,7 +123,7 @@ from openedx.core.lib.courses import course_image_url
               href_class = "register"
           %>
           <a href="${reg_href}" class="${href_class}">
-            ${_("Enroll Now")}
+            ${_("Зачислиться на курс")}
           </a>
           <div id="register_error"></div>
         %endif
@@ -152,7 +152,7 @@ from openedx.core.lib.courses import course_image_url
 
     <div class="course-sidebar">
       <div class="course-summary">
-        <h2>Course Summary</h2>
+        <h2>Сводка курса</h2>
         <%block name="course_about_important_dates">
         <ol class="important-dates">
           <li class="important-dates-item">
