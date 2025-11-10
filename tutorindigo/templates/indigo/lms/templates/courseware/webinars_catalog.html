@@ -1,0 +1,414 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import gettext as _
+import pytz
+%>
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%block name="js_extra">
+  <script type="text/javascript" src="${static.url('common/js/vendor/bootstrap.bundle.js')}"></script>
+</%block>
+
+<%
+MOSCOW_TZ = pytz.timezone('Europe/Moscow')
+%>
+
+<%block name="pagetitle">${_("Webinars Catalog")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="find-courses">
+        <section class="courses-container">
+            <div class="course-heading-area">
+                <h2>Каталог вебинаров</h2>
+                <p>Все вебинары доступные на платформе</p>
+            </div>
+
+            <div class="saerch-bar-discover">
+                <div class="dropdown filter-block">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M2 3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V4.25245C14 4.51767 13.8946 4.77202 13.7071 4.95956L9.62623 9.04044C9.43869 9.22798 9.33333 9.48233 9.33333 9.74755V11.3333L6.66667 14V9.74755C6.66667 9.48233 6.56131 9.22798 6.37377 9.04044L2.29289 4.95956C2.10536 4.77202 2 4.51767 2 4.25245V3Z" stroke="#9CA3AF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Фильтры</span>
+                    </a>
+                    <div class="dropdown-menu search-facets-lists" aria-labelledby="dropdownMenuLink">
+                        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+                            <h2 class="header-search-facets">${_('Фильтры')}</h2>
+                            <section class="search-facets-lists">
+                                <form method="get" class="webinars-filters-form" id="webinar-filters-form">
+                                    <input type="hidden" name="search" value="${request.GET.get('search', '') | h}">
+
+                                    <div class="filter-group">
+                                        <h4>Организация</h4>
+                                        % for org in organizations:
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" name="org" value="${org}"
+                                                   id="org-${org}" ${'checked' if org in selected_orgs else ''}>
+                                            <label for="org-${org}">${org}</label>
+                                        </div>
+                                        % endfor
+                                    </div>
+
+                                    <div class="filter-group">
+                                        <h4>Статус</h4>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" name="status" value="current"
+                                                   id="status-current" ${'checked' if 'current' in selected_statuses else ''}>
+                                            <label for="status-current">Актуальные</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" name="status" value="upcoming"
+                                                   id="status-upcoming" ${'checked' if 'upcoming' in selected_statuses else ''}>
+                                            <label for="status-upcoming">Запланированные</label>
+                                        </div>
+                                        <div class="filter-checkbox">
+                                            <input type="checkbox" name="status" value="past"
+                                                   id="status-past" ${'checked' if 'past' in selected_statuses else ''}>
+                                            <label for="status-past">Прошедшие</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="filter-actions">
+                                        <button type="submit" class="btn btn-primary btn-sm">Применить</button>
+                                        <a href="${request.path}" class="btn btn-secondary btn-sm">Сбросить</a>
+                                    </div>
+                                </form>
+                            </section>
+                        </aside>
+                    </div>
+                </div>
+                <div class="discover-search">
+                    <div id="discovery-form" role="search" aria-label="webinar" class="wrapper-search-context">
+                        <form class="wrapper-search-input" id="webinar-search-form">
+                            <label for="discovery-input" class="sr">${_('Search for a webinar')}</label>
+                            <div class="input-holder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4ZM2 8C2 4.68629 4.68629 2 8 2C11.3137 2 14 4.68629 14 8C14 9.29583 13.5892 10.4957 12.8907 11.4765L17.7071 16.2929C18.0976 16.6834 18.0976 17.3166 17.7071 17.7071C17.3166 18.0976 16.6834 18.0976 16.2929 17.7071L11.4765 12.8907C10.4957 13.5892 9.29583 14 8 14C4.68629 14 2 11.3137 2 8Z" fill="#9CA3AF"/>
+                                </svg>
+                                <input id="discovery-input" class="discovery-input" placeholder="Найти вебинар" type="text" value="${request.GET.get('search', '') | h}"/>
+                            </div>
+                            <div class="button-holder">
+                                <button type="submit" class="button postfix discovery-submit" title="${_('Search')}">
+                                    Поиск
+                                </button>
+                            </div>
+                        </form>
+                        <div id="discovery-message" class="search-status-label">
+                            % if request.GET.get('search'):
+                                <span>Результаты поиска для: "${request.GET.get('search') | h}"</span>
+                            % endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-holder courses" role="region" aria-label="${_('List of Webinars')}">
+                % if webinars:
+                    <ul class="courses-listing courses-list">
+                        % for webinar in webinars:
+                        <li class="courses-listing-item webinar-item ${webinar['status']}">
+                            <article class="course webinar-card" role="region" aria-label="${webinar['webinar_block'].display_name}">
+                                <header class="course-image">
+                                    <div class="cover-image webinar-image-placeholder">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="2" y="6" width="20" height="12" rx="2" ry="2"></rect>
+                                            <polyline points="2,12 12,17 22,12"></polyline>
+                                        </svg>
+                                        <span>Вебинар</span>
+                                    </div>
+                                    <span class="status-badge ${webinar['status']}">
+                                        % if webinar['status'] == 'current':
+                                            Актуальный
+                                        % elif webinar['status'] == 'upcoming':
+                                            Запланированный
+                                        % else:
+                                            Прошедший
+                                        % endif
+                                    </span>
+                                </header>
+                                <section class="course-info">
+                                    <h2 class="course-name">
+                                        <span class="course-title" title="${webinar['webinar_block'].display_name}">
+                                            ${webinar['webinar_block'].display_name}
+                                        </span>
+                                        <span class="course-organization" title="${webinar['org']}">
+                                            ${webinar['org']}
+                                        </span>
+                                    </h2>
+
+                                    <div class="webinar-details">
+                                        <p class="course-link" title="${webinar['course'].display_name}">
+                                            <strong>Курс:</strong> ${webinar['course'].display_name}
+                                        </p>
+
+                                        <div class="course-date" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" aria-hidden="true">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 3.83332H15.8333C16.75 3.83332 17.5 4.58332 17.5 5.49999V17.1667C17.5 18.0833 16.75 18.8333 15.8333 18.8333H4.16667C3.24167 18.8333 2.5 18.0833 2.5 17.1667L2.50833 5.49999C2.50833 4.58332 3.24167 3.83332 4.16667 3.83332H5V2.16666H6.66667V3.83332H13.3333V2.16666H15V3.83332ZM4.16667 8.83332V17.1667H15.8333V8.83332H4.16667ZM15.8333 7.16666H4.16667V5.49999H15.8333V7.16666ZM14.1667 11.3333H10V15.5H14.1667V11.3333Z" fill="#9CA3AF"/>
+                                            </svg>
+                                            % if webinar['webinar_block'].start_datetime:
+                                                <%
+                                                    start_dt = webinar['webinar_block'].start_datetime
+                                                    if start_dt:
+                                                        start_str = start_dt.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M')
+                                                    else:
+                                                        start_str = ""
+                                                %>
+                                                Начало: ${start_str} (МСК)
+                                            % else:
+                                                Начало: не указано
+                                            % endif
+                                        </div>
+
+                                        <div class="course-date" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" aria-hidden="true">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 3.83332H15.8333C16.75 3.83332 17.5 4.58332 17.5 5.49999V17.1667C17.5 18.0833 16.75 18.8333 15.8333 18.8333H4.16667C3.24167 18.8333 2.5 18.0833 2.5 17.1667L2.50833 5.49999C2.50833 4.58332 3.24167 3.83332 4.16667 3.83332H5V2.16666H6.66667V3.83332H13.3333V2.16666H15V3.83332ZM4.16667 8.83332V17.1667H15.8333V8.83332H4.16667ZM15.8333 7.16666H4.16667V5.49999H15.8333V7.16666ZM14.1667 11.3333H10V15.5H14.1667V11.3333Z" fill="#9CA3AF"/>
+                                            </svg>
+                                            % if webinar['webinar_block'].end_datetime:
+                                                <%
+                                                    end_dt = webinar['webinar_block'].end_datetime
+                                                    if end_dt:
+                                                        end_str = end_dt.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M')
+                                                    else:
+                                                        end_str = ""
+                                                %>
+                                                Окончание: ${end_str} (МСК)
+                                            % else:
+                                                Окончание: не указано
+                                            % endif
+                                        </div>
+                                    </div>
+
+                                    <a href="/courses/${webinar['course'].id}/jump_to/${webinar['webinar_block'].location}" class="learn-more" aria-label="Перейти к вебинару в курсе">
+                                        Перейти к вебинару в курсе
+                                    </a>
+                                </section>
+                            </article>
+                        </li>
+                        % endfor
+                    </ul>
+                % else:
+                    <div class="no-webinars">
+                        % if request.GET.get('search') or selected_orgs or selected_statuses:
+                            <p>По выбранным фильтрам вебинаров не найдено.</p>
+                            <a href="${request.path}" class="btn btn-primary">Сбросить фильтры</a>
+                        % else:
+                            <p>На платформе пока нет вебинаров.</p>
+                        % endif
+                    </div>
+                % endif
+            </div>
+        </section>
+    </section>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('webinar-search-form');
+    const searchInput = document.getElementById('discovery-input');
+
+    if (searchForm) {
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const searchValue = searchInput.value.trim();
+            const url = new URL(window.location.href);
+
+            if (searchValue) {
+                url.searchParams.set('search', searchValue);
+            } else {
+                url.searchParams.delete('search');
+            }
+
+            url.searchParams.delete('page');
+
+            window.location.href = url.toString();
+        });
+    }
+
+    const filterForm = document.getElementById('webinar-filters-form');
+    if (filterForm) {
+        filterForm.addEventListener('submit', function(e) {
+            const searchValue = searchInput ? searchInput.value.trim() : '';
+            if (searchValue) {
+                const hiddenSearchInput = filterForm.querySelector('input[name="search"]');
+                if (hiddenSearchInput) {
+                    hiddenSearchInput.value = searchValue;
+                }
+            }
+        });
+    }
+
+    const filterCheckboxes = document.querySelectorAll('.webinars-filters-form input[type="checkbox"]');
+    filterCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const searchValue = searchInput ? searchInput.value.trim() : '';
+            if (searchValue) {
+                const hiddenSearchInput = filterForm.querySelector('input[name="search"]');
+                if (hiddenSearchInput) {
+                    hiddenSearchInput.value = searchValue;
+                }
+            }
+        });
+    });
+});
+</script>
+
+<style>
+.webinar-image-placeholder {
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 140px;
+    color: #6c757d;
+}
+
+.webinar-image-placeholder svg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 8px;
+    color: #adb5bd;
+}
+
+.webinar-image-placeholder span {
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.webinar-card .status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7em;
+    font-weight: bold;
+    z-index: 1;
+}
+
+.webinar-card .status-badge.current {
+    background: #d4edda;
+    color: #155724;
+}
+
+.webinar-card .status-badge.upcoming {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.webinar-card .status-badge.past {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.webinar-details {
+    margin: 10px 0;
+    flex-grow: 1;
+}
+
+.course-link {
+    margin: 8px 0;
+    font-size: 0.9em;
+    color: #666;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 2.6em;
+    min-height: 2.6em;
+    line-height: 1.3;
+}
+
+.course-organization {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.course-date {
+    margin: 5px 0;
+    min-height: 1.3em; /* Ensure consistent height */
+}
+
+.no-webinars {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    grid-column: 1 / -1;
+}
+
+.no-webinars .btn {
+    margin-top: 15px;
+}
+
+.courses-listing-item .course {
+    height: 100%;
+    min-height: 380px;
+}
+
+.search-facets-lists .webinars-filters-form {
+    padding: 20px;
+}
+
+.filter-group {
+    margin-bottom: 20px;
+}
+
+.filter-group h4 {
+    margin-bottom: 12px;
+    font-size: 1em;
+    font-weight: 600;
+    color: #374151;
+}
+
+.filter-checkbox {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-checkbox input {
+    margin-right: 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.filter-checkbox label {
+    font-size: 0.9em;
+    color: #4b5563;
+    cursor: pointer;
+}
+
+.filter-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+.filter-actions .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.85em;
+    white-space: nowrap;
+}
+
+.search-status-label {
+    margin-top: 8px;
+    font-size: 0.9em;
+    color: #6b7280;
+    min-height: 20px;
+}
+
+@media (max-width: 768px) {
+    .courses-listing-item .course {
+        min-height: 360px;
+    }
+}
+</style>
