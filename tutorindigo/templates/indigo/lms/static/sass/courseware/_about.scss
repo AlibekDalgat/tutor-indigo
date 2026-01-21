@@ -14,8 +14,12 @@
         .intro-inner-wrapper {
             background: none;
             padding: 0 0 60px;
+            @include media-breakpoint-down(sm) {
+                height: 371px !important;
+            }
             @include media-breakpoint-up(md) {
                 padding: 0 0 20px;
+                height: 371px !important;
             }
             @include media-breakpoint-up(lg) {
                 padding: 36px 0 60px;
