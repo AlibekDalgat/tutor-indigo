@@ -3,20 +3,87 @@
 <%! from django.utils.translation import gettext as _ %>
 <%inherit file="../main.html" />
 
+<%block name="head_extra">
+    <link rel="stylesheet" type="text/css" href="${static.url('css/info-pages.css')}" />
+</%block>
+
 <%block name="pagetitle">${_("Contact Us")}</%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="container about">
         <h1>
-            <%block name="pageheader">${page_header or _("Contact")}</%block>
+            <%block name="pageheader">Связаться с нами</%block>
         </h1>
-        <p>
-            <%block name="pagecontent">${page_content or _("This page left intentionally blank. Feel free to add your own content.")}</%block>
-        </p>
-        <!-- NEW IN INDIGO: add graphic image -->
-        <div class="graphic-img">
-            <img src="${static.url('images/contact.svg')}" alt="Runs on Tutor" />
-            <img class="dark" src="${static.url('images/contact-dark.svg')}" alt="Runs on Tutor" />
+
+        <div class="contact-content info-page-content">
+            <h2>Мы открыты к диалогу и партнёрству</h2>
+
+            <p>Команда <strong>ProfiUp</strong> всегда на связи — будь то вопрос по работе портала, обсуждение внедрения LMS или запуск корпоративного образовательного проекта.</p>
+
+            <p>Свяжитесь с нами удобным для вас способом — мы оперативно ответим и предложим решение, соответствующее вашей задаче.</p>
+
+            <div class="contact-section">
+                <h3>По вопросам обучения и платформы</h3>
+                <p>Если вы:</p>
+                <ul>
+                    <li>планируете внедрить LMS или корпоративную академию;</li>
+                    <li>рассматриваете SaaS или White Label-решение;</li>
+                    <li>хотите обсудить кастомизацию, методологию или сопровождение;</li>
+                    <li>ищете партнёра в области корпоративного обучения и EdTech,</li>
+                </ul>
+                <p>мы будем рады диалогу.</p>
+            </div>
+
+            <div class="contact-section">
+                <h3>Контакты</h3>
+
+                <div class="contact-card">
+                    <h4>Генеральный директор и основатель проекта ProfiUp</h4>
+                    <h5>Константин Лысенко</h5>
+
+                    <div class="contact-method">
+                        <strong>📧 Электронная почта:</strong><br>
+                        <a href="mailto:Konstantin@profiup.ru">Konstantin@profiup.ru</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <strong>📱 Telegram:</strong><br>
+                        <a href="https://t.me/lyskosy" target="_blank">@lyskosy</a><br>
+                        <a href="https://t.me/profiup_official" target="_blank">@profiup_official</a>
+                    </div>
+
+                    <div class="contact-method">
+                        <strong>🌐 Официальный портал:</strong><br>
+                        <a href="https://profiup.ru" target="_blank">https://profiup.ru</a> (при необходимости)
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <h4>Техническая поддержка</h4>
+                    <p>По вопросам работы портала, доступов, курсов и технических ошибок:</p>
+
+                    <div class="contact-method">
+                        <strong>📧 Служба поддержки:</strong><br>
+                        <a href="mailto:support@profiup.ru">support@profiup.ru</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-section">
+                <h3>Формат работы</h3>
+                <p>Мы работаем в формате:</p>
+                <ul>
+                    <li>консультаций и предпроектной диагностики;</li>
+                    <li>пилотных запусков и масштабирования;</li>
+                    <li>долгосрочного партнёрства и сопровождения.</li>
+                </ul>
+                <p>Каждый запрос рассматривается индивидуально — с учётом задач, масштаба и специфики бизнеса.</p>
+            </div>
+
+            <div class="contact-section">
+                <h3>Обратная связь</h3>
+                <p>Если у вас есть предложения, идеи или обратная связь по работе платформы <strong>ProfiUp</strong>, мы будем рады вашему сообщению. Ваше мнение помогает нам делать продукт лучше.</p>
+            </div>
         </div>
     </section>
 </main>
