@@ -123,7 +123,7 @@ from openedx.core.lib.courses import course_image_url
               href_class = "register"
           %>
           <a href="${reg_href}" class="${href_class}">
-            ${_("Зачислиться на курс")}
+            ${_("Зачислиться на обучение")}
           </a>
           <div id="register_error"></div>
         %endif
@@ -152,7 +152,7 @@ from openedx.core.lib.courses import course_image_url
 
     <div class="course-sidebar">
       <div class="course-summary">
-        <h2>Сводка курса</h2>
+        <h2>${_("Сводка обучения")}</h2>
         <%block name="course_about_important_dates">
         <ol class="important-dates">
           <li class="important-dates-item">
