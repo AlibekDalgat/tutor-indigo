@@ -47,6 +47,12 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
              Каталог вебинаров
           </a>
       </div>
+      <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+        <a class="tab-nav-link" href="${settings.PROFILE_MICROFRONTEND_URL.split('/u/')[0]}/ratings"
+           aria-current="${'page' if '/ratings' in request.path else 'false'}">
+          Рейтинги
+        </a>
+      </div>
     % endif
   </div>
   <div class="secondary d-flex align-items-center">
