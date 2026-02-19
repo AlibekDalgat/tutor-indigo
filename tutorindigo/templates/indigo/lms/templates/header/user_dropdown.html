@@ -35,6 +35,7 @@ should_show_order_history = not enterprise_customer_portal
     <div class="dropdown-user-menu hidden" aria-label=${_("More Options")} role="menu" id="user-menu" tabindex="-1">
         <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${urljoin(settings.PROFILE_MICROFRONTEND_URL, f'{user.username}')}" role="menuitem">${_("Profile")}</a></div>
         <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${settings.ACCOUNT_MICROFRONTEND_URL}" role="menuitem">${_("Account")}</a></div>
+        <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${settings.PROFILE_MICROFRONTEND_URL.split('/u/')[0]}/rewards" role="menuitem">${_("Мои награды")}</a></div>
         <div class="mobile-nav-item dropdown-item dropdown-nav-item"><a href="${reverse('logout')}" role="menuitem">${_("Sign Out")}</a></div>
     </div>
 </div>
