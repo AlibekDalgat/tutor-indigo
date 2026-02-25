@@ -47,6 +47,15 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
   <script src="${static.url('js/responsive-nav.js')}"></script>
 </%block>
 
+<style>
+header.global-header {
+    position: fixed;
+    top: 0;
+    z-index: 200;
+    overflow: visible;
+}
+</style>
+
 <header class="global-header ${'slim' if course else ''}">
     <div class="header-container">
     % if settings.FEATURES.get('ENABLE_COOKIE_POLICY_BANNER', use_cookie_banner):
