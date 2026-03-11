@@ -14,3 +14,12 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/106853589" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+% if WIDGET_MODE:
+  <style>
+    :root {
+      --primary: ${WIDGET_PRIMARY | h};
+      --primary-light: ${WIDGET_PRIMARY_LIGHT | h};
+    }
+  </style>
+% endif

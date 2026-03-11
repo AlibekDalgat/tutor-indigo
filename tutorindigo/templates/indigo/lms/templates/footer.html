@@ -46,8 +46,13 @@
       ## through an API to partner sites (such as marketing sites or blogs),
       ## which are not technically powered by OpenEdX.
       % if not hide_openedx_link:
-      <img src="${static.url('images/profilup-logo.png')}" alt="Profilup" width="120" />
+      % if WIDGET_MODE and WIDGET_LOGO_URL:
+        <img src="${WIDGET_LOGO_URL}" alt="${WIDGET_PLATFORM_NAME or SITE_NAME}" width="120" />
+      % else:
+        <img src="${static.url('images/profilup-logo.png')}" alt="Profilup" width="120" />
+      % endif
     </div>
+    % if not WIDGET_MODE:
     {% if INDIGO_FOOTER_NAV_LINKS %}
     <nav class="nav-colophon" aria-label="${_('About')}">
       <ol>
@@ -59,6 +64,7 @@
       </ol>
     </nav>
     {% endif %}
+    % endif
   </div>
   <span class="copyright-site">Зарегистрированный товарный знак ®${datetime.now().year}.</span>
   % endif
@@ -98,8 +104,13 @@
         ## through an API to partner sites (such as marketing sites or blogs),
         ## which are not technically powered by OpenEdX.
         % if not hide_openedx_link:
-        <img src="${static.url('images/profilup-logo.png')}" alt="Profilup" width="120" />
+        % if WIDGET_MODE and WIDGET_LOGO_URL:
+          <img src="${WIDGET_LOGO_URL}" alt="${WIDGET_PLATFORM_NAME or SITE_NAME}" width="120" />
+        % else:
+          <img src="${static.url('images/profilup-logo.png')}" alt="Profilup" width="120" />
+        % endif
       </div>
+      % if not WIDGET_MODE:
       {% if INDIGO_FOOTER_NAV_LINKS %}
       <nav class="nav-colophon" aria-label="${_('About')}">
         <ol>
@@ -111,6 +122,7 @@
         </ol>
       </nav>
       {% endif %}
+      % endif
     </div>
   <span class="copyright-site">Зарегистрированный товарный знак ®${datetime.now().year}.</span>
     % endif
