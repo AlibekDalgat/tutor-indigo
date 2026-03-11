@@ -78,7 +78,7 @@ header.global-header {
                     border-bottom: 2px solid transparent;
                     &.active, &:hover {
                         color: $dark;
-                        border-bottom: 2px solid $primary;
+                        border-bottom: 2px solid var(--primary, $primary);
                     }
                 }
             }
@@ -89,8 +89,8 @@ header.global-header {
             justify-content: end;
             .toggle-user-dropdown {
                 padding: 9px 15px;
-                background: $primary-light;
-                color: $primary;
+                background: var(--primary-light, $primary-light);
+                color: var(--primary, $primary);
                 font-size: 14px;
                 font-weight: 500;
                 line-height: 20px;
@@ -136,7 +136,7 @@ header.global-header {
                         line-height: 20px;
                         color: $light-dark;
                         &:hover {
-                            background: $primary-light;
+                            background: var(--primary-light, $primary-light);
                             color: $dark;                         ;
                         }
                     }
@@ -172,7 +172,7 @@ header.global-header {
     z-index: 9999;
     margin: 0;
     border: none;
-    border-bottom: 2px solid $primary;
+    border-bottom: 2px solid var(--primary, $primary);
     width: 100%;
     .mobile-nav-link {
         a {
@@ -183,7 +183,7 @@ header.global-header {
             color: $light-dark;
             border: none;
             &:hover, &.active {
-                background: $primary-light;
+                background: var(--primary-light, $primary-light);
                 color: $dark;
             }
         }
@@ -214,7 +214,7 @@ header.global-header {
     .light-theme-icon, .dark-theme-icon{
         width: 18px;
         height: 1.5rem;
-        color: $primary;
+        color: var(--primary, $primary);
         & svg {
             width: inherit;
             height: inherit;
@@ -244,7 +244,7 @@ header.global-header {
 
               &:focus {
                 ~ .slider {
-                  outline: 2px solid $primary;
+                  outline: 2px solid var(--primary, $primary);
                   outline-offset: 1px;
                 }
               }
@@ -298,7 +298,7 @@ body.indigo-dark-theme {
         z-index: 9999;
         margin: 0;
         border: none;
-        border-bottom: 2px solid $primary;
+        border-bottom: 2px solid var(--primary, $primary);
         width: 100%;
         .mobile-nav-link {
             a {

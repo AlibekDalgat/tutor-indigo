@@ -7,7 +7,7 @@
     border: none;
     overflow-x: auto;
     ul.navbar-nav {
-        border-bottom: 1px solid $primary-light;
+        border-bottom: 1px solid var(--primary-light, $primary-light);
         .nav-item {
             margin-right: 10px;
             @include media-breakpoint-up(md) {
@@ -60,7 +60,7 @@
                 display: block;
                 margin: 0 0 10px;
                 font-size: 30px;
-                color: $primary;
+                color: var(--primary, $primary);
             }
         }
     }
@@ -80,7 +80,7 @@
     .bookmarks-results-list {
         a.bookmarks-results-list-item {
             border: 1px solid $gray-light;
-            border-left: 8px solid $primary-light;
+            border-left: 8px solid var(--primary-light, $primary-light);
             padding: 20px 30px;
             border-radius: 8px;
             position: relative;
@@ -133,7 +133,7 @@
                 line-height: 16px;
                 font-weight: 500;
                 color: #fff;
-                background: $primary;
+                background: var(--primary, $primary);
                 padding: 9px 13px;
                 border-radius: 6px;
                 bottom: 0;

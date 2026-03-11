@@ -218,7 +218,7 @@ nav.wrapper-preview-menu {
 }
 
 .view-profile .wrapper-profile-section-container-one .wrapper-profile-section-one {
-  border: solid $primary;
+  border: solid var(--primary, $primary);
   border-width: 5px 1px 1px 1px;
 }
 
@@ -230,7 +230,7 @@ nav.wrapper-preview-menu {
   padding-top: 0;
 }
 .wrapper-account-settings .wrapper-header .account-nav button.active {
-  border-bottom-color: $primary;
+  border-bottom-color: var(--primary, $primary);
 }
 
 /////////////////// Footer
@@ -301,7 +301,7 @@ nav.wrapper-preview-menu {
       margin: 0 0 20px;
     }
     a {
-      color: $primary;
+      color: var(--primary, $primary);
       text-decoration: underline;
     }
     .graphic-img {
@@ -356,7 +356,7 @@ nav.wrapper-preview-menu {
         }
         &.active {
           color: $dark;
-          border-color: $primary;
+          border-color: var(--primary, $primary);
         }
       }
     }
@@ -396,7 +396,7 @@ body.view-student-notes {
   }
 
   .wrapper-member-select {
-    background: $primary-light !important;
+    background: var(--primary-light, $primary-light) !important;
     select {
       background: none;
       color: dark;
@@ -405,14 +405,14 @@ body.view-student-notes {
   .member-list {
     .label {
       color: dark !important;
-      background: $primary-light !important;
+      background: var(--primary-light, $primary-light) !important;
     }
   }
   .bottom-bar {
-    background: $primary-light !important;
+    background: var(--primary-light, $primary-light) !important;
     input[type="button"] {
-      background: $primary !important;
-      border-color: $primary !important;
+      background: var(--primary, $primary) !important;
+      border-color: var(--primary, $primary) !important;
       color: white !important;
       text-shadow: none !important;
       font-size: 14px;
@@ -456,7 +456,7 @@ body.view-instructordash {
       line-height: 30px;
     }
     a.instructor-info-action {
-      background: $primary;
+      background: var(--primary, $primary);
       color: white;
       margin: 0 0 10px;
       outline-offset: 3px;
@@ -487,7 +487,7 @@ body.view-instructordash {
           text-decoration: none !important;
           outline-offset: 3px;
           &.active-section {
-            background: $primary !important;
+            background: var(--primary, $primary) !important;
             color: white !important;
           }
           &:hover {
@@ -535,14 +535,14 @@ body.view-instructordash {
         .total {
           border-top: 1px solid $gray-light;
           th, td {
-            color: $primary;
+            color: var(--primary, $primary);
             font-weight: 700;
           }
         }
       }
     }
     #course_info > h4 {
-      background: $primary-light;
+      background: var(--primary-light, $primary-light);
       padding: 15px 0 0 15px;
       font-size: 18px;
       color: $dark;
@@ -560,7 +560,7 @@ body.view-instructordash {
       }
     }
     #course_info  .enrollment-wrapper, .basic-wrapper, .course-errors-wrapper, .running-tasks-container {
-      background: $primary-light;
+      background: var(--primary-light, $primary-light);
       padding: 15px;
       margin: 0 0 30px;
       h4 {
@@ -595,8 +595,8 @@ body.view-instructordash {
     }
   }
   .enrollment-button, input[type=button], button.btn {
-    background: $primary;
-    border-color: $primary;
+    background: var(--primary, $primary);
+    border-color: var(--primary, $primary);
     color: white;
     font-weight: 500;
     font-size: 14px;
@@ -622,7 +622,7 @@ body.view-wiki{
     #alert_stat_bar {
       .paragon__alert-warning {
         color: $dark;
-        background: $primary-light;
+        background: var(--primary-light, $primary-light);
         border: none;
         button.paragon__close {
           background: none !important;
@@ -647,19 +647,19 @@ body.view-wiki{
       }
       .table.table-striped {
         tr:nth-child(2n) {
-          background: $primary-light;
+          background: var(--primary-light, $primary-light);
         }
         td {
           a {
-            color: $primary !important;
+            color: var(--primary, $primary) !important;
           }
         }
       }
       .directory-toolbar {
-        background: $primary-light;
+        background: var(--primary-light, $primary-light);
         a.btn {
-          background: $primary !important;
-          border-color: $primary !important;
+          background: var(--primary, $primary) !important;
+          border-color: var(--primary, $primary) !important;
           box-shadow: none !important;
           color: white !important;
           text-shadow: none;
@@ -680,19 +680,19 @@ body.view-wiki{
     }
     .wiki-wrapper section.wiki .btn.btn-primary, .wiki-wrapper section.wiki .btn.btn-brand {
       background: $primary!important;
-      border-color: $primary !important;
+      border-color: var(--primary, $primary) !important;
       color: white !important;
       box-shadow: none;
       &:hover {
         background: $primary!important;
-        border-color: $primary !important;
+        border-color: var(--primary, $primary) !important;
         color: white !important;
       }
     }
     .wiki {
       .breadcrumbs-header {
         padding: 15px;
-        background: $primary-light;
+        background: var(--primary-light, $primary-light);
         border-radius: 8px;
         border: none;
         height: auto;
@@ -702,7 +702,7 @@ body.view-wiki{
           margin: 0 0 0 10px;
           a.add-article-btn {
             margin: 0;
-            background: $primary;
+            background: var(--primary, $primary);
             color: white;
             font-size: 14px;
             font-weight: 500;
@@ -774,13 +774,13 @@ body.view-wiki{
               font-size: 14px;
               line-height: 28px;
               font-weight: 500;
-              color: $primary;
+              color: var(--primary, $primary);
               padding: 6px 10px;
               &:hover {
                 text-decoration: none;
                 font-weight: 500;
                 border: none;
-                background: $primary-light;
+                background: var(--primary-light, $primary-light);
               }
               .icon {
                 font-size: 18px;
@@ -792,8 +792,8 @@ body.view-wiki{
             &.active {
               a {
                 border: none;
-                color: $primary;
-                background: $primary-light;
+                color: var(--primary, $primary);
+                background: var(--primary-light, $primary-light);
               }
             }
           }
@@ -801,7 +801,7 @@ body.view-wiki{
         .timestamp {
           border: 1px solid $gray-light;
           border-radius: 8px;
-          border-left: 6px solid $primary-light;
+          border-left: 6px solid var(--primary-light, $primary-light);
           padding: 15px;
           .label {
             font-weight: 500;
@@ -817,7 +817,7 @@ body.view-wiki{
         .see-children {
           border: none;
           a {
-            background: $primary;
+            background: var(--primary, $primary);
             padding: 6px 15px;
             text-align: center;
             color: white;
@@ -1682,7 +1682,7 @@ body.indigo-dark-theme {
     height: 30px;
 
     &.active {
-      box-shadow: inset 0 0 0 2px $primary;
+      box-shadow: inset 0 0 0 2px var(--primary, $primary);
 
       .indigo-dark-theme & {
         box-shadow: inset 0 0 0 2px $primary-d;

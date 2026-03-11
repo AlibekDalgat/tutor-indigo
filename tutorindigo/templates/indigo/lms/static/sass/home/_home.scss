@@ -89,14 +89,14 @@ section.home {
                                 padding: 6px;
                                 height: 38px;
                                 border-radius: 6px;
-                                background: $primary;
+                                background: var(--primary, $primary);
                                 font-family: $font-family-title;
                                 border: none;
                                 @include media-breakpoint-up(sm) {
                                     min-width: 100px;
                                 }
                                 &:hover {
-                                    background: $primary;
+                                    background: var(--primary, $primary);
                                     opacity: .8;
                                 }
                             }
@@ -104,7 +104,7 @@ section.home {
                         .input-holder {
                             flex-grow: 1;
                             border-radius: 6px;
-                            background: $primary-light;
+                            background: var(--primary-light, $primary-light);
                             padding: 0 0 0 33px;
                             position: relative;
                             display: block;

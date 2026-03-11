@@ -1,9 +1,9 @@
 // Include custom xblocks
 .wrap-instructor-info a.instructor-info-action {
-    background: $primary !important;
+    background: var(--primary, $primary) !important;
     color: white !important;
 }
-.indigo-dark-theme { 
+.indigo-dark-theme {
     select {
         background: transparent;
         color: $text-color-d;
@@ -25,56 +25,56 @@
             }
         }
     }
-    .xmodule_display.xmodule_AboutBlock a:link, 
-    .xmodule_display.xmodule_AboutBlock a:visited, 
-    .xmodule_display.xmodule_AboutBlock a:hover, 
-    .xmodule_display.xmodule_AboutBlock a:active, 
-    .xmodule_display.xmodule_AboutBlock a:focus, 
-    .xmodule_display.xmodule_CourseInfoBlock a:link, 
-    .xmodule_display.xmodule_CourseInfoBlock a:visited, 
-    .xmodule_display.xmodule_CourseInfoBlock a:hover, 
-    .xmodule_display.xmodule_CourseInfoBlock a:active, 
-    .xmodule_display.xmodule_CourseInfoBlock a:focus, 
-    .xmodule_display.xmodule_HtmlBlock a:link, 
-    .xmodule_display.xmodule_HtmlBlock a:visited, 
-    .xmodule_display.xmodule_HtmlBlock a:hover, 
-    .xmodule_display.xmodule_HtmlBlock a:active, 
-    .xmodule_display.xmodule_HtmlBlock a:focus, 
-    .xmodule_display.xmodule_StaticTabBlock a:link, 
-    .xmodule_display.xmodule_StaticTabBlock a:visited, 
-    .xmodule_display.xmodule_StaticTabBlock a:hover, 
-    .xmodule_display.xmodule_StaticTabBlock a:active, 
+    .xmodule_display.xmodule_AboutBlock a:link,
+    .xmodule_display.xmodule_AboutBlock a:visited,
+    .xmodule_display.xmodule_AboutBlock a:hover,
+    .xmodule_display.xmodule_AboutBlock a:active,
+    .xmodule_display.xmodule_AboutBlock a:focus,
+    .xmodule_display.xmodule_CourseInfoBlock a:link,
+    .xmodule_display.xmodule_CourseInfoBlock a:visited,
+    .xmodule_display.xmodule_CourseInfoBlock a:hover,
+    .xmodule_display.xmodule_CourseInfoBlock a:active,
+    .xmodule_display.xmodule_CourseInfoBlock a:focus,
+    .xmodule_display.xmodule_HtmlBlock a:link,
+    .xmodule_display.xmodule_HtmlBlock a:visited,
+    .xmodule_display.xmodule_HtmlBlock a:hover,
+    .xmodule_display.xmodule_HtmlBlock a:active,
+    .xmodule_display.xmodule_HtmlBlock a:focus,
+    .xmodule_display.xmodule_StaticTabBlock a:link,
+    .xmodule_display.xmodule_StaticTabBlock a:visited,
+    .xmodule_display.xmodule_StaticTabBlock a:hover,
+    .xmodule_display.xmodule_StaticTabBlock a:active,
     .xmodule_display.xmodule_StaticTabBlock a:focus {
         color: $primary-d;
     }
-    .xmodule_display.xmodule_AboutBlock p, 
-    .xmodule_display.xmodule_CourseInfoBlock p, 
-    .xmodule_display.xmodule_HtmlBlock p, 
+    .xmodule_display.xmodule_AboutBlock p,
+    .xmodule_display.xmodule_CourseInfoBlock p,
+    .xmodule_display.xmodule_HtmlBlock p,
     .xmodule_display.xmodule_StaticTabBlock p {
         color: $text-color-d;
     }
-    .xmodule_display.xmodule_AboutBlock ol, 
-    .xmodule_display.xmodule_AboutBlock ul, 
-    .xmodule_display.xmodule_CourseInfoBlock ol, 
-    .xmodule_display.xmodule_CourseInfoBlock ul, 
-    .xmodule_display.xmodule_HtmlBlock ol, 
-    .xmodule_display.xmodule_HtmlBlock ul, 
-    .xmodule_display.xmodule_StaticTabBlock ol, 
+    .xmodule_display.xmodule_AboutBlock ol,
+    .xmodule_display.xmodule_AboutBlock ul,
+    .xmodule_display.xmodule_CourseInfoBlock ol,
+    .xmodule_display.xmodule_CourseInfoBlock ul,
+    .xmodule_display.xmodule_HtmlBlock ol,
+    .xmodule_display.xmodule_HtmlBlock ul,
+    .xmodule_display.xmodule_StaticTabBlock ol,
     .xmodule_display.xmodule_StaticTabBlock ul {
         color: $text-color-d;
     }
-    .xmodule_display.xmodule_AboutBlock pre, 
-    .xmodule_display.xmodule_CourseInfoBlock pre, 
-    .xmodule_display.xmodule_HtmlBlock pre, 
+    .xmodule_display.xmodule_AboutBlock pre,
+    .xmodule_display.xmodule_CourseInfoBlock pre,
+    .xmodule_display.xmodule_HtmlBlock pre,
     .xmodule_display.xmodule_StaticTabBlock pre {
         color: $text-color-d;
     }
     .hd-1, .hd-2, .hd-3, .hd-4, .hd-5, .hd-6, .hd-7, .hd-8 {
         color: $text-color-d;
     }
-    .xmodule_display.xmodule_AboutBlock img, 
-    .xmodule_display.xmodule_CourseInfoBlock img, 
-    .xmodule_display.xmodule_HtmlBlock img, 
+    .xmodule_display.xmodule_AboutBlock img,
+    .xmodule_display.xmodule_CourseInfoBlock img,
+    .xmodule_display.xmodule_HtmlBlock img,
     .xmodule_display.xmodule_StaticTabBlock img {
         background-color: $text-color-d
     }
@@ -104,9 +104,9 @@
         background: $primary-d;
         color: $btn-color-d;
     }
-    .xblock--drag-and-drop .btn-default:hover, 
-    .xblock--drag-and-drop .btn-default.is-hovered, 
-    .xblock--drag-and-drop .btn-default:focus, 
+    .xblock--drag-and-drop .btn-default:hover,
+    .xblock--drag-and-drop .btn-default.is-hovered,
+    .xblock--drag-and-drop .btn-default:focus,
     .xblock--drag-and-drop .btn-default.is-focused {
         border: 1px solid $primary-d;
         color: $primary-d;
@@ -154,8 +154,8 @@
         background: $primary-d !important;
         color: $btn-color-d !important;
     }
-    .openassessment .openassessment__steps__step.is--unavailable .step__counter:before, 
-    .openassessment .openassessment__steps__step.is--unavailable .step__label, 
+    .openassessment .openassessment__steps__step.is--unavailable .step__counter:before,
+    .openassessment .openassessment__steps__step.is--unavailable .step__label,
     .openassessment .openassessment__steps__step.is--unavailable .step__deadline {
         color:$text-color-d;
     }
@@ -211,7 +211,7 @@
     .xmodule_display.xmodule_ProblemBlock .problem .capa_inputtype.textline > .incorrect input, .xmodule_display.xmodule_ProblemBlock .problem .inputtype.formulaequationinput > .incorrect input {
         border-color: $danger-d;
     }
-    .xmodule_display.xmodule_ProblemBlock .problem .capa_inputtype.textline > .incorrect .status .status-icon:after, 
+    .xmodule_display.xmodule_ProblemBlock .problem .capa_inputtype.textline > .incorrect .status .status-icon:after,
     .xmodule_display.xmodule_ProblemBlock .problem .inputtype.formulaequationinput > .incorrect .status .status-icon:after {
         color: $danger-d;
     }
@@ -229,8 +229,8 @@
         border-color: $primary-d;
         color: $btn-color-d;
     }
-    .xmodule_display.xmodule_ProblemBlock div.problem .action .problem-action-btn:hover, 
-    .xmodule_display.xmodule_ProblemBlock div.problem .action .problem-action-btn:focus, 
+    .xmodule_display.xmodule_ProblemBlock div.problem .action .problem-action-btn:hover,
+    .xmodule_display.xmodule_ProblemBlock div.problem .action .problem-action-btn:focus,
     .xmodule_display.xmodule_ProblemBlock div.problem .action .problem-action-btn:active,
     .xmodule_display.xmodule_ProblemBlock div.problem .notification.general .icon {
         color: $primary-d;
@@ -242,19 +242,19 @@
     .xmodule_display.xmodule_ProblemBlock div.problem div div.equation span.MathJax_CHTML, .xmodule_display.xmodule_ProblemBlock div.problem div div.equation span.MathJax, .xmodule_display.xmodule_ProblemBlock div.problem div div.equation span.MathJax_SVG {
         background: $primary-light-d;
     }
-    .step--student-training .student-training__assessment 
-    .assessment__rubric__question--feedback textarea, 
-    .step--student-training .student-training__display__response, 
-    .openassessment .submission__feedback__fields textarea, .openassessment 
-    .step--self-assessment .self-assessment__assessment .assessment__rubric__question--feedback textarea, 
-    .openassessment .step--self-assessment .self-assessment__display__response, 
-    .openassessment .step--peer-assessment .peer-assessment__assessment .assessment__rubric__question--feedback textarea, 
-    .openassessment .step--peer-assessment .peer-assessment__display__response, 
-    .openassessment .step--response .response__submission__content .submission__file__description textarea, 
-    .openassessment .step--response .response__submission__content .submission__answer__part__text textarea, 
-    .openassessment .staff-assessment__assessment .assessment__rubric__question--feedback textarea, .openassessment 
-    .staff-assessment__display__response, .step--response .step__rubric .question__answers .answer--feedback .answer__value, 
-    .step--student-training .student-training__assessment .question__answers .answer--feedback .answer__value, .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer--feedback .answer__value, 
+    .step--student-training .student-training__assessment
+    .assessment__rubric__question--feedback textarea,
+    .step--student-training .student-training__display__response,
+    .openassessment .submission__feedback__fields textarea, .openassessment
+    .step--self-assessment .self-assessment__assessment .assessment__rubric__question--feedback textarea,
+    .openassessment .step--self-assessment .self-assessment__display__response,
+    .openassessment .step--peer-assessment .peer-assessment__assessment .assessment__rubric__question--feedback textarea,
+    .openassessment .step--peer-assessment .peer-assessment__display__response,
+    .openassessment .step--response .response__submission__content .submission__file__description textarea,
+    .openassessment .step--response .response__submission__content .submission__answer__part__text textarea,
+    .openassessment .staff-assessment__assessment .assessment__rubric__question--feedback textarea, .openassessment
+    .staff-assessment__display__response, .step--response .step__rubric .question__answers .answer--feedback .answer__value,
+    .step--student-training .student-training__assessment .question__answers .answer--feedback .answer__value, .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer--feedback .answer__value,
     .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer--feedback .answer__value, .openassessment .staff-assessment__assessment .question__answers .answer--feedback .answer__value {
         overflow-y: auto;
     }
@@ -289,18 +289,18 @@
         }
     }
 
-    .ui-dialog.ui-widget.ui-widget-content, 
+    .ui-dialog.ui-widget.ui-widget-content,
     .ui-dialog-titlebar.ui-widget-header,
     .ui-dialog-buttonpane.ui-widget-content,
     .dialog-confirm.ui-dialog-content.ui-widget-content{
         background: $body-bg-d;
         color: $text-color-d;
-        & .ui-button.ui-state-default:active, 
+        & .ui-button.ui-state-default:active,
         & .ui-button.ui-state-default:focus
         {box-shadow: none;}
     }
 
-    .openassessment .submission__answer__part__prompt__copy a, 
+    .openassessment .submission__answer__part__prompt__copy a,
     .wrapper--xblock .message .message__content a{
         color: $primary-d;
         &:hover{
@@ -313,20 +313,20 @@
         .self-assessment__display__title,.step--self-assessment .self-assessment__display__title,
         .peer-assessment__display__title,.step--self-assessment .peer-assessment__display__title,,
         .staff-assessment__display__title, .step--self-assessment .staff-assessment__display__title,{
-            color: $text-color-d !important; // open-assessment scss file used !important 
+            color: $text-color-d !important; // open-assessment scss file used !important
         }
     }
 
     div.wrapper--xblock {
-        
+
         .openassessment__student-training--instructions.step__message > .message__content{
             color: $primary-light-d;
         }
         .openassessment .openassessment__steps__step .step__message.message--waiting{
             background: $primary-light-d;
         }
-        .message--complete, 
-        .step--student-training .message--correct, 
+        .message--complete,
+        .step--student-training .message--correct,
         .step--student-training .message--correct{
             background: #ecfaec;
             & .message__content{
@@ -337,8 +337,8 @@
             }
         }
 
-        .message--incomplete, 
-        .step--student-training .message--incorrect, 
+        .message--incomplete,
+        .step--student-training .message--incorrect,
         .step--student-training .wrapper--xblock .message--incorrect{
             background: #fff9eb;
             & .message__content{
@@ -351,7 +351,7 @@
 
         .openassessment .openassessment__steps__step.is--in-progress .step__status__value .copy{
             color: $primary-light-d;
-        }  
+        }
 
         .openassessment .openassessment__steps .openassessment__steps__step .step__header .step__deadline{
             color: $border-color-d;
@@ -362,33 +362,33 @@
         }
 
         .step--response .step__rubric .question__answers .wrapper--input .answer__label,
-        .step--student-training .student-training__assessment .question__answers .wrapper--input .answer__label, 
-        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .wrapper--input .answer__label, 
-        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .wrapper--input .answer__label, 
+        .step--student-training .student-training__assessment .question__answers .wrapper--input .answer__label,
+        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .wrapper--input .answer__label,
+        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .wrapper--input .answer__label,
         .openassessment .staff-assessment__assessment .question__answers .wrapper--input .answer__label{
             color: $text-color-d;
         }
 
-        .step--response .step__rubric .question__answers .answer__tip, 
-        .step--student-training .student-training__assessment .question__answers .answer__tip, 
-        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__tip, 
-        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__tip, 
+        .step--response .step__rubric .question__answers .answer__tip,
+        .step--student-training .student-training__assessment .question__answers .answer__tip,
+        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__tip,
+        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__tip,
         .openassessment .staff-assessment__assessment .question__answers .answer__tip,
-        .step--response .step__rubric .question__answers .answer__points, 
-        .step--student-training .student-training__assessment .question__answers .answer__points, 
-        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__points, 
-        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__points, 
+        .step--response .step__rubric .question__answers .answer__points,
+        .step--student-training .student-training__assessment .question__answers .answer__points,
+        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__points,
+        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__points,
         .openassessment .staff-assessment__assessment .question__answers .answer__points
-        .step--response .step__rubric .question__answers .answer__points__label, 
-        .step--student-training .student-training__assessment .question__answers .answer__points__label, 
-        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__points__label, 
-        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__points__label, 
+        .step--response .step__rubric .question__answers .answer__points__label,
+        .step--student-training .student-training__assessment .question__answers .answer__points__label,
+        .openassessment .step--self-assessment .self-assessment__assessment .question__answers .answer__points__label,
+        .openassessment .step--peer-assessment .peer-assessment__assessment .question__answers .answer__points__label,
         .openassessment .staff-assessment__assessment .question__answers .answer__points__label
         {
             color: $text-color-primary;
         }
 
-        .tox .tox-toolbar, .tox .tox-toolbar__overflow, 
+        .tox .tox-toolbar, .tox .tox-toolbar__overflow,
         .tox .tox-toolbar__primary{
             background-color: $body-bg-d;
             color: $text-color-d;
@@ -415,7 +415,7 @@
             .label,
             .question__score__potential
             { color: $text-color-d; }
-        } 
+        }
         .openassessment .answer{
             .answer__source__value-with-points,
             .answer__value__value,
@@ -429,7 +429,7 @@
         }
 
 
-        // for staff 
+        // for staff
         .ui-staff{
             .wrapper--content{
                 background: $body-bg-d;
@@ -442,7 +442,7 @@
             .message--complete,
             .message--incomplete{
                 color: $primary-light-d;
-                & .message__content{ 
+                & .message__content{
                     color: $primary-light-d;
                     a {
                         color: $btn-color-d;
@@ -481,16 +481,16 @@
             background-color: $light-dark-d;
         }
     }
-      
+
     .emoji-button-highlighted{
         background-color: $text-color-d;
-      
+
         &:hover,
         &:hover:not(:disabled){
             background-color: $text-color-d;
         }
     }
-    .xblock.xmodule_display.xmodule_HtmlBlock .blue-text{color: $primary;}
+    .xblock.xmodule_display.xmodule_HtmlBlock .blue-text{color: var(--primary, $primary);}
     .xblock.xmodule_display.xmodule_HtmlBlock ul li::marker,
     .xblock.xmodule_display.xmodule_HtmlBlock ul li strong{
         color: $text-color-d;
@@ -523,9 +523,9 @@
                     .annotator-tag{
                         background: lightgrey;
                         color: $primary-light-d;
-                        
+
                     }
-                } 
+                }
             }
 
             .annotator-controls {
@@ -540,7 +540,7 @@
         .annotator-adder{
             button{
                 background: $primary-light-d !important;
-                &::after{ 
+                &::after{
                     color: $primary-d;
                     text-shadow: none;
                 }
@@ -580,6 +580,6 @@
                     color: $primary-d;
                 }
             }
-        }  
+        }
     }
 }
