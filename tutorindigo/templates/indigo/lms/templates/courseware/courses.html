@@ -14,6 +14,9 @@
   <script type="text/javascript" src="${static.url('common/js/vendor/bootstrap.bundle.js')}"></script>
 </%block>
 % if course_discovery_enabled:
+<script>
+  window.WIDGET_ORG_FILTER = "${widget_org_short_name | n, js_escaped_string}";
+</script>
 <%block name="header_extras">
   % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
   <script type="text/template" id="${template_name}-tpl">
@@ -39,7 +42,7 @@
       <section class="courses-container">
         <!-- NEW IN INDIGO Heading was added. -->
         <div class="course-heading-area">
-          <h2>Раскройте свой потенциал: откройте для себя новые курсы сегодня!</h2>
+          <h2>2Раскройте свой потенциал: откройте для себя новые курсы сегодня!</h2>
           <p>Откройте для себя мир знаний и улучшите свои навыки с помощью наших разнообразных курсов</p>
         </div>
         <!-- NEW IN INDIGO Modified search bar and filters. -->
