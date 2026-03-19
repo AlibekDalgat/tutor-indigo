@@ -10,6 +10,11 @@
                 <span class="course-code"><%- content.number %></span>
                 <span class="course-title"><%- content.display_name %></span>
                 <span class="course-organization"><%- org %></span>
+                <% if (total_rewards && total_rewards > 0) { %>
+                    <div class="course-rewards mt-2 text-dark">
+                        <strong>Награды:</strong> <%- total_rewards %>
+                    </div>
+                <% } %>
             </h2>
             <a href="/courses/<%- course %>/about" class="learn-more" aria-label="">
               <%- gettext("Learn More") %>
