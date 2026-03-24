@@ -160,6 +160,58 @@
             vertical-align: top;
         }
     }
+    .safari-wrapper {
+      padding-bottom: 0px;
+    }
+    .course-promotion-banner {
+        background-color: #f8fafc;
+        border-left: 5px solid var(--primary, #007bff);
+        padding: 9px 22px;
+        margin-bottom: 28px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+
+        @include media-breakpoint-up(md) {
+            margin-bottom: 32px;
+        }
+        .promo-content {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+
+            @include media-breakpoint-up(md) {
+                flex-wrap: nowrap;
+            }
+
+            .promo-text {
+                font-size: 1.05rem;
+                font-weight: 500;
+                color: #1f2937;
+                line-height: 1.4;
+            }
+
+            .promo-logo-link {
+                display: inline-block;
+                transition: transform 0.2s ease;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
+
+                .promo-logo {
+                    height: 30px;
+                    width: auto;
+                    max-width: 160px;
+                    object-fit: contain;
+                    background: white;
+                    padding: 4px;
+                    border-radius: 6px;
+                    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+                }
+            }
+        }
+    }
     .about-content {
         display: flex;
         flex-flow: column-reverse;

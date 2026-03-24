@@ -132,6 +132,27 @@ from openedx.core.lib.courses import course_image_url
   </header>
   </%block>
 
+  % if promotions and promotions.get('text'):
+    <div class="course-promotion-banner">
+      <div class="promo-content">
+        <span class="promo-text">
+            ${promotions.get('text')}
+        </span>
+
+        % if promotions.get('logoUrl'):
+          <a href="${promotions.get('link') | n}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="promo-logo-link">
+              <img src="${promotions.get('logoUrl')}"
+                alt="${promotions.get('text')}"
+                class="promo-logo" />
+          </a>
+        % endif
+      </div>
+    </div>
+  % endif
+
   <div class="about-content">
 
     <%block name="course_about_details">
