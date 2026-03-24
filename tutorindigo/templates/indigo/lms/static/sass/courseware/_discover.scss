@@ -93,12 +93,17 @@
                         height: auto;
                         font-family: $font-family-title;
                         padding: 10px 20px 0;
+                        display: flex;
+                        flex-direction: column;
                         .course-code {
                             display: none;
                         }
                         h2 {
                             font-family: $font-family-title;
                             height: 72px;
+                        }
+                        .course-main-info {
+                            height: 60px;
                         }
                         .course-title {
                             color: #292C2E;
@@ -126,8 +131,29 @@
                             white-space: nowrap;
                             text-overflow: ellipsis;
                         }
+                        .course-extra-info {
+                            flex: 0 0 38px;
+                            display: flex;
+                            align-items: center;
+                            gap: 16px;
+                            margin: 5px 0 5px 0;
+                        }
+
                         .course-rewards {
-                          font-size: 0.9rem;
+                            font-size: 0.9rem;
+                            color: #292C2E;
+                            white-space: nowrap;
+                        }
+
+                        .promo-icon-wrapper {
+                            margin-left: auto;
+                        }
+
+                        .promo-icon {
+                            height: 25px;
+                            width: auto;
+                            max-width: 50px;
+                            padding: 2px;
                         }
                         .learn-more {
                             display: block;
