@@ -142,8 +142,7 @@ from openedx.core.lib.courses import course_image_url
         % if promotions.get('logoUrl'):
           <a href="${promotions.get('link') | n}"
             target="_blank"
-            rel="noopener noreferrer"
-            class="promo-logo-link">
+            class="promo-logo-link" onclick="window.open('${promotions.get('link') | n}', '_blank'); return false;">
               <img src="${promotions.get('logoUrl')}"
                 alt="${promotions.get('text')}"
                 class="promo-logo" />
