@@ -8,6 +8,7 @@
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+from openedx.features.ai.toggles import ai_assistant_widget_enabled
 %>
 
 <%
@@ -47,13 +48,21 @@ from openedx.core.djangoapps.site_configuration import helpers as configuration_
              Каталог вебинаров
           </a>
       </div>
-      <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
-        <a class="tab-nav-link" href="${settings.PROFILE_MICROFRONTEND_URL.split('/u/')[0]}/ratings"
-           aria-current="${'page' if '/ratings' in request.path else 'false'}">
-          Рейтинги
-        </a>
-      </div>
     % endif
+    % if ai_assistant_widget_enabled():
+    <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+      <a class="tab-nav-link" href="${settings.LEARNER_HOME_MICROFRONTEND_URL}ai-assistant"
+         aria-current="${'page' if '/ai-assistant' in request.path else 'false'}">
+        ИИ-ассистент
+      </a>
+    </div>
+    % endif
+    <div class="mobile-nav-item hidden-mobile nav-item nav-tab">
+      <a class="tab-nav-link" href="${settings.PROFILE_MICROFRONTEND_URL.split('/u/')[0]}/ratings"
+         aria-current="${'page' if '/ratings' in request.path else 'false'}">
+        Рейтинги
+      </a>
+    </div>
   </div>
   <div class="secondary d-flex align-items-center">
     <%include file="user_dropdown.html"/>
