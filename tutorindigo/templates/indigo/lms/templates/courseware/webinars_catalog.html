@@ -13,14 +13,55 @@ import pytz
 MOSCOW_TZ = pytz.timezone('Europe/Moscow')
 %>
 
-<%block name="pagetitle">${_("Webinars Catalog")}</%block>
+<%
+import json
+
+calendar_events = []
+for w in webinars:
+    start_iso = ""
+    if w['webinar_block'].start_datetime:
+        start_iso = w['webinar_block'].start_datetime.astimezone(MOSCOW_TZ).isoformat()
+    end_iso = ""
+    if w['webinar_block'].end_datetime:
+        end_iso = w['webinar_block'].end_datetime.astimezone(MOSCOW_TZ).isoformat()
+
+    calendar_events.append({
+        "title": w['webinar_block'].display_name,
+        "course": w['course'].display_name,
+        "org": w['org'],
+        "status": w['status'],
+        "start": start_iso,
+        "end": end_iso,
+        "jump_url": "/courses/{}/jump_to/{}".format(w['course'].id, str(w['webinar_block'].location))
+    })
+
+json_str = json.dumps(calendar_events)
+
+context.write('<script type="text/javascript">')
+context.write('window.webinarsData = ' + json_str + ';')
+context.write('</script>')
+%>
+
+<%block name="pagetitle">${_("Каталог вебинаров")}</%block>
 
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="find-courses">
         <section class="courses-container">
             <div class="course-heading-area">
-                <h2>Каталог вебинаров</h2>
-                <p>Все вебинары доступные на платформе</p>
+                <div class="header-with-view-toggle">
+                    <div>
+                        <h2>Каталог вебинаров</h2>
+                        <p>Все вебинары доступные на платформе</p>
+                    </div>
+                    <div class="view-toggle">
+                        <button class="view-btn active" id="grid-view-btn" title="Плитки">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zM13 3h8v8h-8V3zm0 10h8v8h-8v-8z"/></svg>
+                        </button>
+                        <button class="view-btn" id="calendar-view-btn" title="Календарь">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/></svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div class="saerch-bar-discover">
@@ -32,48 +73,33 @@ MOSCOW_TZ = pytz.timezone('Europe/Moscow')
                         <span>Фильтры</span>
                     </a>
                     <div class="dropdown-menu search-facets-lists" aria-labelledby="dropdownMenuLink">
-                        <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
+                         <aside aria-label="${_('Refine Your Search')}" class="search-facets phone-menu">
                             <h2 class="header-search-facets">${_('Фильтры')}</h2>
-                            <section class="search-facets-lists">
-                                <form method="get" class="webinars-filters-form" id="webinar-filters-form">
-                                    <input type="hidden" name="search" value="${request.GET.get('search', '') | h}">
-
-                                    <div class="filter-group">
-                                        <h4>Организация</h4>
-                                        % for org in organizations:
-                                        <div class="filter-checkbox">
-                                            <input type="checkbox" name="org" value="${org}"
-                                                   id="org-${org}" ${'checked' if org in selected_orgs else ''}>
-                                            <label for="org-${org}">${org}</label>
-                                        </div>
-                                        % endfor
+                            <form method="get" class="webinars-filters-form" id="webinar-filters-form">
+                                <input type="hidden" name="search" value="${request.GET.get('search', '') | h}">
+                                <div class="filter-group">
+                                    <h4>Организация</h4>
+                                    % for org in organizations:
+                                    <div class="filter-checkbox">
+                                        <input type="checkbox" name="org" value="${org}" id="org-${org}" ${'checked' if org in selected_orgs else ''}>
+                                        <label for="org-${org}">${org}</label>
                                     </div>
-
-                                    <div class="filter-group">
-                                        <h4>Статус</h4>
-                                        <div class="filter-checkbox">
-                                            <input type="checkbox" name="status" value="current"
-                                                   id="status-current" ${'checked' if 'current' in selected_statuses else ''}>
-                                            <label for="status-current">Актуальные</label>
-                                        </div>
-                                        <div class="filter-checkbox">
-                                            <input type="checkbox" name="status" value="upcoming"
-                                                   id="status-upcoming" ${'checked' if 'upcoming' in selected_statuses else ''}>
-                                            <label for="status-upcoming">Запланированные</label>
-                                        </div>
-                                        <div class="filter-checkbox">
-                                            <input type="checkbox" name="status" value="past"
-                                                   id="status-past" ${'checked' if 'past' in selected_statuses else ''}>
-                                            <label for="status-past">Прошедшие</label>
-                                        </div>
+                                    % endfor
+                                </div>
+                                <div class="filter-group">
+                                    <h4>Статус</h4>
+                                    % for val, label in [('current', 'Актуальные'), ('upcoming', 'Запланированные'), ('past', 'Прошедшие')]:
+                                    <div class="filter-checkbox">
+                                        <input type="checkbox" name="status" value="${val}" id="status-${val}" ${'checked' if val in selected_statuses else ''}>
+                                        <label for="status-${val}">${label}</label>
                                     </div>
-
-                                    <div class="filter-actions">
-                                        <button type="submit" class="btn btn-primary btn-sm">Применить</button>
-                                        <a href="${request.path}" class="btn btn-secondary btn-sm">Сбросить</a>
-                                    </div>
-                                </form>
-                            </section>
+                                    % endfor
+                                </div>
+                                <div class="filter-actions">
+                                    <button type="submit" class="btn btn-primary btn-sm">Применить</button>
+                                    <a href="${request.path}" class="btn btn-secondary btn-sm">Сбросить</a>
+                                </div>
+                            </form>
                         </aside>
                     </div>
                 </div>
@@ -102,14 +128,14 @@ MOSCOW_TZ = pytz.timezone('Europe/Moscow')
                 </div>
             </div>
 
-            <div class="course-holder courses" role="region" aria-label="${_('List of Webinars')}">
+            <div id="grid-view-container" class="course-holder courses">
                 % if webinars:
                     <ul class="courses-listing courses-list">
                         % for webinar in webinars:
-                        <li class="courses-listing-item webinar-item ${webinar['status']}">
-                            <article class="course webinar-card" role="region" aria-label="${webinar['webinar_block'].display_name}">
-                                <header class="course-image">
-                                    <div class="cover-image webinar-provider-image">
+                            <li class="courses-listing-item webinar-item ${webinar['status']}">
+                                <article class="course webinar-card">
+                                    <header class="course-image">
+                                        <div class="cover-image webinar-provider-image">
                                         % if webinar['provider'] == 'telemost':
                                             <img src="${static.url('images/telemost.png')}" alt="Яндекс Телемост" class="provider-logo">
                                         % elif webinar['provider'] == 'pruffme':
@@ -122,75 +148,31 @@ MOSCOW_TZ = pytz.timezone('Europe/Moscow')
                                             </svg>
                                             <span>Вебинар</span>
                                         % endif
-                                    </div>
-                                    <span class="status-badge ${webinar['status']}">
-                                        % if webinar['status'] == 'current':
-                                            Актуальный
-                                        % elif webinar['status'] == 'upcoming':
-                                            Запланированный
-                                        % else:
-                                            Прошедший
-                                        % endif
-                                    </span>
-                                </header>
-                                <section class="course-info">
-                                    <h2 class="course-name">
-                                        <span class="course-title" title="${webinar['webinar_block'].display_name}">
-                                            ${webinar['webinar_block'].display_name}
-                                        </span>
-                                        <span class="course-organization" title="${webinar['org']}">
-                                            ${webinar['org']}
-                                        </span>
-                                    </h2>
-
-                                    <div class="webinar-details">
-                                        <p class="course-link" title="${webinar['course'].display_name}">
-                                            <strong>Курс:</strong> ${webinar['course'].display_name}
-                                        </p>
-
-                                        <div class="course-date" aria-hidden="true">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" aria-hidden="true">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 3.83332H15.8333C16.75 3.83332 17.5 4.58332 17.5 5.49999V17.1667C17.5 18.0833 16.75 18.8333 15.8333 18.8333H4.16667C3.24167 18.8333 2.5 18.0833 2.5 17.1667L2.50833 5.49999C2.50833 4.58332 3.24167 3.83332 4.16667 3.83332H5V2.16666H6.66667V3.83332H13.3333V2.16666H15V3.83332ZM4.16667 8.83332V17.1667H15.8333V8.83332H4.16667ZM15.8333 7.16666H4.16667V5.49999H15.8333V7.16666ZM14.1667 11.3333H10V15.5H14.1667V11.3333Z" fill="#9CA3AF"/>
-                                            </svg>
-                                            % if webinar['webinar_block'].start_datetime:
-                                                <%
-                                                    start_dt = webinar['webinar_block'].start_datetime
-                                                    if start_dt:
-                                                        start_str = start_dt.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M')
-                                                    else:
-                                                        start_str = ""
-                                                %>
-                                                Начало: ${start_str} (МСК)
-                                            % else:
-                                                Начало: не указано
-                                            % endif
                                         </div>
-
-                                        <div class="course-date" aria-hidden="true">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none" aria-hidden="true">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M15 3.83332H15.8333C16.75 3.83332 17.5 4.58332 17.5 5.49999V17.1667C17.5 18.0833 16.75 18.8333 15.8333 18.8333H4.16667C3.24167 18.8333 2.5 18.0833 2.5 17.1667L2.50833 5.49999C2.50833 4.58332 3.24167 3.83332 4.16667 3.83332H5V2.16666H6.66667V3.83332H13.3333V2.16666H15V3.83332ZM4.16667 8.83332V17.1667H15.8333V8.83332H4.16667ZM15.8333 7.16666H4.16667V5.49999H15.8333V7.16666ZM14.1667 11.3333H10V15.5H14.1667V11.3333Z" fill="#9CA3AF"/>
-                                            </svg>
-                                            % if webinar['webinar_block'].end_datetime:
-                                                <%
-                                                    end_dt = webinar['webinar_block'].end_datetime
-                                                    if end_dt:
-                                                        end_str = end_dt.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M')
-                                                    else:
-                                                        end_str = ""
-                                                %>
-                                                Окончание: ${end_str} (МСК)
+                                        <span class="status-badge ${webinar['status']}">
+                                            % if webinar['status'] == 'current':
+                                                Актуальный
+                                            % elif webinar['status'] == 'upcoming':
+                                                Запланированный
                                             % else:
-                                                Окончание: не указано
+                                                Прошедший
                                             % endif
+                                        </span>
+                                    </header>
+                                    <section class="course-info">
+                                        <h2 class="course-name">
+                                            <span class="course-title">${webinar['webinar_block'].display_name}</span>
+                                            <span class="course-organization">${webinar['org']}</span>
+                                        </h2>
+                                        <div class="webinar-details">
+                                            <p class="course-link"><strong>Курс:</strong> ${webinar['course'].display_name}</p>
+                                            <div class="course-date">Начало: ${webinar['webinar_block'].start_datetime.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M') if webinar['webinar_block'].start_datetime else '---'}</div>
+                                            <div class="course-date">Окончание: ${webinar['webinar_block'].end_datetime.astimezone(MOSCOW_TZ).strftime('%d.%m.%Y %H:%M') if webinar['webinar_block'].end_datetime else '---'}</div>
                                         </div>
-                                    </div>
-
-                                    <a href="/courses/${webinar['course'].id}/jump_to/${webinar['webinar_block'].location}" class="learn-more" aria-label="Перейти к вебинару в курсе">
-                                        Перейти к вебинару в курсе
-                                    </a>
-                                </section>
-                            </article>
-                        </li>
+                                        <a href="/courses/${webinar['course'].id}/jump_to/${webinar['webinar_block'].location}" class="learn-more">Перейти к вебинару</a>
+                                    </section>
+                                </article>
+                            </li>
                         % endfor
                     </ul>
                 % else:
@@ -204,59 +186,188 @@ MOSCOW_TZ = pytz.timezone('Europe/Moscow')
                     </div>
                 % endif
             </div>
+
+            <div id="calendar-view-container" class="calendar-wrapper" style="display: none;">
+                <div class="calendar-header">
+                    <button id="prev-month" class="btn-nav">&larr;</button>
+                    <h3 id="current-month-year"></h3>
+                    <button id="next-month" class="btn-nav">&rarr;</button>
+                </div>
+                <div class="calendar-grid-header">
+                    <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div class="weekend">Сб</div><div class="weekend">Вс</div>
+                </div>
+                <div id="calendar-grid" class="calendar-grid"></div>
+            </div>
         </section>
     </section>
 </main>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const searchForm = document.getElementById('webinar-search-form');
-    const searchInput = document.getElementById('discovery-input');
+<div id="webinar-modal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-date-title"></h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div id="modal-webinars-list" class="modal-body courses-list">
+            </div>
+    </div>
+</div>
 
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const searchValue = searchInput.value.trim();
-            const url = new URL(window.location.href);
 
-            if (searchValue) {
-                url.searchParams.set('search', searchValue);
-            } else {
-                url.searchParams.delete('search');
-            }
+<script type="text/javascript">
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        var data = window.webinarsData || [];
+        var currentDate = new Date();
 
-            url.searchParams.delete('page');
+        var gridBtn = document.getElementById('grid-view-btn');
+        var calBtn = document.getElementById('calendar-view-btn');
+        var gridView = document.getElementById('grid-view-container');
+        var calView = document.getElementById('calendar-view-container');
 
-            window.location.href = url.toString();
-        });
-    }
+        const searchForm = document.getElementById('webinar-search-form');
+        const searchInput = document.getElementById('discovery-input');
 
-    const filterForm = document.getElementById('webinar-filters-form');
-    if (filterForm) {
-        filterForm.addEventListener('submit', function(e) {
-            const searchValue = searchInput ? searchInput.value.trim() : '';
-            if (searchValue) {
-                const hiddenSearchInput = filterForm.querySelector('input[name="search"]');
-                if (hiddenSearchInput) {
-                    hiddenSearchInput.value = searchValue;
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const searchValue = searchInput.value.trim();
+                const url = new URL(window.location.href);
+
+                if (searchValue) {
+                    url.searchParams.set('search', searchValue);
+                } else {
+                    url.searchParams.delete('search');
                 }
-            }
-        });
-    }
 
-    const filterCheckboxes = document.querySelectorAll('.webinars-filters-form input[type="checkbox"]');
-    filterCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const searchValue = searchInput ? searchInput.value.trim() : '';
-            if (searchValue) {
-                const hiddenSearchInput = filterForm.querySelector('input[name="search"]');
-                if (hiddenSearchInput) {
-                    hiddenSearchInput.value = searchValue;
-                }
+                url.searchParams.delete('page');
+
+                window.location.href = url.toString();
+            });
+        }
+
+        if (gridBtn && calBtn) {
+            gridBtn.onclick = function() {
+                gridBtn.classList.add('active'); calBtn.classList.remove('active');
+                if(gridView) gridView.style.display = 'block';
+                if(calView) calView.style.display = 'none';
+            };
+            calBtn.onclick = function() {
+                calBtn.classList.add('active'); gridBtn.classList.remove('active');
+                if(gridView) gridView.style.display = 'none';
+                if(calView) calView.style.display = 'block';
+                renderCalendar();
+            };
+        }
+
+        function renderCalendar() {
+            var grid = document.getElementById('calendar-grid');
+            var label = document.getElementById('current-month-year');
+            if (!grid || !label) return;
+
+            grid.innerHTML = '';
+            var y = currentDate.getFullYear();
+            var m = currentDate.getMonth();
+
+            var monthText = new Intl.DateTimeFormat('ru-RU', { month: 'long', year: 'numeric' }).format(currentDate);
+            label.innerText = monthText.charAt(0).toUpperCase() + monthText.slice(1);
+
+            var firstDay = new Date(y, m, 1).getDay();
+            var daysInMonth = new Date(y, m + 1, 0).getDate();
+            var offset = (firstDay === 0) ? 6 : firstDay - 1;
+
+            for (var i = 0; i < offset; i++) {
+                var empty = document.createElement('div');
+                empty.className = 'calendar-day empty';
+                grid.appendChild(empty);
             }
+
+            for (var d = 1; d <= daysInMonth; d++) {
+                var dayCell = document.createElement('div');
+                dayCell.className = 'calendar-day';
+
+                var monthStr = ('0' + (m + 1)).slice(-2);
+                var dayStr = ('0' + d).slice(-2);
+                var dateStr = y + '-' + monthStr + '-' + dayStr;
+                dayCell.innerHTML = '<span class="day-number">' + d + '</span>';
+
+                var dayWebinars = data.filter(function(w) {
+                    return w.start && w.start.indexOf(dateStr) === 0;
+                });
+
+                if (dayWebinars.length > 0) {
+                    dayCell.classList.add('has-events');
+                    var preview = document.createElement('div');
+                    preview.className = 'day-events-preview';
+
+                    dayWebinars.slice(0, 2).forEach(function(w) {
+                        var item = document.createElement('div');
+                        item.className = 'event-mini ' + w.status;
+                        item.innerText = w.title;
+                        preview.appendChild(item);
+                    });
+                    dayCell.appendChild(preview);
+
+                    (function(ds, events) {
+                        dayCell.onclick = function() { showModal(ds, events); };
+                    })(dateStr, dayWebinars);
+                }
+                grid.appendChild(dayCell);
+            }
+        }
+
+        function showModal(date, events) {
+            var modal = document.getElementById('webinar-modal');
+            var list = document.getElementById('modal-webinars-list');
+            var title = document.getElementById('modal-date-title');
+            if (!modal || !list) return;
+
+            title.innerText = new Date(date).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+
+            var html = '';
+            events.forEach(function(w, index) {
+                html += '<div class="webinar-item ' + w.status + '" style="width: 100%; margin-bottom: 15px;">' +
+                    '<article class="course webinar-card" style="min-height: auto;">' +
+                        '<section class="course-info">' +
+                            '<h2 class="course-name">' +
+                                '<span class="webinar-title">' + w.title + '</span>' +
+                                '<span class="webinar-organization">' + w.org + '</span>' +
+                            '</h2>' +
+                            '<div class="webinar-details">' +
+                                '<p class="course-link"><strong>Курс:</strong> ' + w.course + '</p>' +
+                                '<p><strong>Начало:</strong> ' +
+                                    new Date(w.start).toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}) +
+                                ' (МСК)</p>' +
+                                '<p><strong>Окончание:</strong> ' +
+                                    new Date(w.end).toLocaleTimeString('ru-RU', {hour:'2-digit', minute:'2-digit'}) +
+                                ' (МСК)</p>' +
+                            '</div>' +
+                            '<a href="' + w.jump_url + '" class="learn-more">Перейти к вебинару</a>' +
+                        '</section>' +
+                    '</article>';
+                if (index < events.length - 1) {
+                    html += '<hr style="border: 0; border-top: 1px solid #bebebe; margin: 20px 0;">';
+                }
+                html += '</div>';
+            });
+            list.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        var closeBtn = document.querySelector('.close-modal');
+        if (closeBtn) closeBtn.onclick = function() { document.getElementById('webinar-modal').style.display = 'none'; };
+
+        window.addEventListener('click', function(e) {
+            var modal = document.getElementById('webinar-modal');
+            if (e.target == modal) modal.style.display = 'none';
         });
+
+        var prev = document.getElementById('prev-month');
+        var next = document.getElementById('next-month');
+        if(prev) prev.onclick = function() { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); };
+        if(next) next.onclick = function() { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); };
     });
-});
+})();
 </script>
 
 <style>
@@ -330,26 +441,37 @@ document.addEventListener('DOMContentLoaded', function() {
     white-space: nowrap;
 }
 
-.course-title {
-    overflow: hidden;
+.webinar-title {
+    color: #292C2E;
+    font-size: 20px;
+    line-height: 22px;
+    height: auto;
+    padding: 0;
+    margin: 0 0 5px;
+    white-space: unset;
+    overflow: hidden !important;
     text-overflow: ellipsis;
-    display: -webkit-box;
+    display: -webkit-box !important;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    max-height: 2.6em;
-    min-height: 2.6em;
-    line-height: 1.3;
 }
 
-.course-organization {
+.webinar-organization {
+    color: #6c7885;
+    font-size: 14px;
+    line-height: 20px;
+    height: auto;
+    padding: 0;
+    margin: 0 0 15px;
+    display: block;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .course-date {
     margin: 5px 0;
-    min-height: 1.3em; /* Ensure consistent height */
+    min-height: 1.3em;
 }
 
 .no-webinars {
@@ -426,4 +548,143 @@ document.addEventListener('DOMContentLoaded', function() {
         min-height: 360px;
     }
 }
+
+.header-with-view-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.view-toggle {
+    display: flex;
+    background: #f3f4f6;
+    padding: 4px;
+    border-radius: 8px;
+}
+.view-btn {
+    border: none;
+    background: transparent;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #9ca3af;
+    transition: 0.2s;
+    box-shadow: none;
+}
+.view-btn.active {
+    background: white;
+    color: #3b82f6;
+    box-shadow: none !important;
+}
+.view-btn:hover:not(:disabled),
+.btn-nav:hover:not(:disabled) {
+    background-image: none !important;
+    background-color: var(--primary-light, #2F2F60);
+}
+
+.calendar-wrapper {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+.btn-nav {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    padding: 5px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: none !important;
+    color: black;
+}
+.calendar-grid-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #f9fafb;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: minmax(120px, auto);
+}
+.calendar-day {
+    border-right: 1px solid #f3f4f6;
+    border-bottom: 1px solid #f3f4f6;
+    padding: 8px;
+    position: relative;
+    cursor: default;
+}
+.calendar-day:nth-child(7n) { border-right: none; }
+.calendar-day.has-events { cursor: pointer; transition: background 0.2s; }
+.calendar-day.has-events:hover { background: #f0f7ff; }
+.day-number { font-weight: 600; color: #6b7280; font-size: 0.9em; }
+
+.day-events-preview { margin-top: 5px; }
+.event-mini {
+    font-size: 11px;
+    padding: 2px 4px;
+    margin-bottom: 2px;
+    border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: #e5e7eb;
+}
+.event-mini.current { background: #d4edda; color: #155724; }
+.event-mini.upcoming { background: #d1ecf1; color: #0c5460; }
+.event-mini.past { background: #f8d7da; color: #721c24; }
+.event-more { font-size: 10px; color: #3b82f6; font-weight: bold; }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+}
+.modal-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+.close-modal {
+    font-size: 24px;
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: pointer;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .calendar-grid { grid-auto-rows: minmax(80px, auto); }
+    .event-mini { display: none; }
+    .calendar-day.has-events::after {
+        content: '•';
+        color: #3b82f6;
+        display: block;
+        text-align: center;
+        font-size: 20px;
+    }
+    .calendar-grid-header { font-size: 12px; }
+    .day-number { font-size: 11px; }
+}
+
 </style>
