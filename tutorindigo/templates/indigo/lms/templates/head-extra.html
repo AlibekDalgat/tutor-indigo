@@ -1,6 +1,15 @@
 <%page expression_filter="h"/>
 <%namespace name='static' file='static_content.html'/>
 
+<!-- PWA Support -->
+<link rel="manifest" href="${static.url('pwa/manifest.json')|h}">
+<link rel="apple-touch-icon" href="${static.url('pwa/apple-touch-icon.png')|h}">
+<link rel="apple-touch-icon" sizes="180x180" href="${static.url('pwa/apple-touch-icon.png')|h}">
+
+<meta name="theme-color" content="#2F2F60">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
